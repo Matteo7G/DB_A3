@@ -1,12 +1,9 @@
 import sqlalchemy as sa
 from sqlalchemy.orm import sessionmaker, declarative_base
-#from models import orm_classes
+from models import Base, Student
 
 
-def wipe_db():
-    DATABASE_URL = "postgresql+psycopg2://a_user:a_password@localhost/db_a3"
-
-    engine = sa.create_engine(DATABASE_URL)
+def reset_db(engine, test_data=None):
     Session = sessionmaker(bind=engine)
     Base = declarative_base()
 
@@ -15,6 +12,7 @@ def wipe_db():
 
     #...
 
+def add_test_data()
 
 #conect to and insert data into db
 
