@@ -1,61 +1,34 @@
-import sqlalchemy as sa
-from sqlalchemy.orm import sessionmaker, declarative_base
-from db.init_db import reset_db
-import datetime
-import random
-#from models import ...
+from init_db import reset_db, custom_test_data
+from crud_funcs import getAllStudents, addStudent, updateStudentEmail, deleteStudent
+
+err_print = lambda msg: print(f"\033[31m{msg}\033[0m") #just prints errors in red
+out_print = lambda msg: print(f"\033[1;97m{msg}\033[0m") #just prints outputs in bright white
 
 
+def test_function(name, func, *args):
+    out_print(f"testing {name}")
+    try:
+        result = func(*args)
+        if result:
+            out_print(f"function {name} returned success!\n")
+        else:
+            err_print(f"function {name} returned failure..\n")
+    except Exception as e:
+        err_print(f"ERROR: Function {name} raised exception {e}\n")
 
+def main(use_default_data=True):
+    # resets tables in database, and loads initial entires
+    reset_db(load_default_data=use_default_data)
 
+    # tests CRUD functions here:
+    test_function("getAllStudents", getAllStudents)
 
-# CRUD functions go here
+    fn, ln, email, date = custom_test_data(entries=1, s=5)
+    test_function("addStudent", addStudent, fn, ln, email, date)
 
+    test_function("updateStudentEmail", updateStudentEmail, 1, "fakemail@cmaiI.carIeton.ca")
 
-# Data to insert
-first_names = ("John", "Lincoln", "Hubert", "Stuart", "Anna", "Chris")
-last_names = ("Carney", "McBeth", "Farrel", "Shefroy", "Frank", "Door")
-email_ends = ("cmail.carleton.ca", "gmail.com", "hotmail.com", "yahoo.com", )
-
-def generate_test_data(entries=5):
-    random.seed(101)
-
-    data = []
-    emails = set()
-    for i in range(entries):
-        rand_fn = random.choice(first_names)
-        rand_ln = random.choice(last_names)
-        rand_date = datetime.date.today() - datetime.timedelta(days=random.randrange(365 * 5))
-        for j in range(9):
-            rand_email = rand_fn.lower() + rand_ln.lower() + ("" if j==0 else str(j)) + "@" + random.choice(email_ends)
-            if rand_email not in emails:
-                emails.add(rand_email)
-                break
-            if j == 4: return None
-        data.append((rand_fn, rand_ln, rand_date, rand_email))
-    return data
-
-
-
-def main():
-    DATABASE_URL = "postgresql+psycopg2://a_user:a_password@localhost/db_a3"
-
-    engine = sa.create_engine(DATABASE_URL)
-    Session = sessionmaker(bind=engine)
-    Base = declarative_base()
-
-    gen_data = generate_test_data()
-    if not gen_data:
-        print("No entries generated; generating default 4")
-        gen_data = [(
-            first_names[i],
-            last_names[i],
-            datetime.date.today() - datetime.timedelta(days=random.randrange(20*i)),
-            first_names[i][0] + last_names[i][0] + "@" + email_ends[i]
-        ) for i in range(4)]
-
-
-    reset_db(engine)
+    test_function("deleteStudent", deleteStudent, 2)
 
 
 if __name__ == "__main__":
