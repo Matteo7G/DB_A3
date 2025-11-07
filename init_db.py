@@ -7,11 +7,11 @@ from models import Base, Student
 err_print = lambda msg: print(f"\033[31m{msg}\033[0m") #just prints errors in red
 
 
-DEFAULT_DATA = (
+DEFAULT_DATA = [
     ('John', 'Doe', 'john.doe@example.com', '2023-09-01'),
     ('Jane', 'Smith', 'jane.smith@example.com', '2023-09-01'),
     ('Jim', 'Beam', 'jim.beam@example.com', '2023-09-02')
-)
+]
 DATABASE_URL = "postgresql+psycopg2://a_user:a_password@localhost/db_a3"
 
 engine = create_engine(DATABASE_URL)
@@ -23,12 +23,12 @@ def reset_db(load_default_data=True):
     Base.metadata.create_all(engine)
 
     test_data = DEFAULT_DATA if load_default_data else custom_test_data(10)
-    if len(test_data) == 0: return
+    if not test_data:
+        return
 
     student_list = [Student(fn, ln, e, d) for fn, ln, e, d in test_data]
     with Local_Session() as session:
-        if len(student_list) == 1: session.add(student_list[0])
-        else: session.add_all(student_list)
+        session.add_all(student_list)
         session.commit()
 
 

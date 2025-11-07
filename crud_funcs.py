@@ -24,7 +24,7 @@ def addStudent(first_name, last_name, email, enrollment_date):
         query_email_exists = select(Student).where(Student.email == email)
         if session.scalars(query_email_exists).first():
             err_print(f"Student with email {email} already exists.")
-            return 1
+            return None
         new_student = Student(first_name, last_name, email, enrollment_date)
         session.add(new_student)
         session.commit()
@@ -37,11 +37,11 @@ def updateStudentEmail(student_id, new_email):
         student = session.get(Student, student_id)
         if not student:
             err_print(f"No student found with ID {student_id}")
-            return 1
+            return None
         student.email = new_email
         session.commit()
         out_print(f"Successfully updated student with ID {student_id} with new email {new_email}")
-    return 0
+    return student
 
 
 def deleteStudent(student_id):
@@ -49,9 +49,9 @@ def deleteStudent(student_id):
         student = session.get(Student, student_id)
         if not student:
             err_print(f"No student found with ID {student_id}")
-            return 1
+            return None
         session.delete(student)
         session.commit()
         out_print(f"Successfully deleted student with ID {student_id}")
-    return 0
+    return student
 
