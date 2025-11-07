@@ -23,7 +23,7 @@ DEFAULT_DATA = [
 # - a_password is your password
 # - localhost is the location of the database
 # - db_a3 is the name of the database
-DATABASE_URL = "postgresql+psycopg2://matteo:matteo_password@localhost/test_db"
+DATABASE_URL = "postgresql+psycopg2://a_user:a_password@localhost/db_a3"
 
 engine = create_engine(DATABASE_URL) #connects to database
 Local_Session = sessionmaker(engine) #initialies function to create sessions
