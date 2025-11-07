@@ -1,5 +1,5 @@
 """
-Database initialization file
+MATTEO GUERRA's Database initialization file
 Handles database connection/setup
 Resets database and re-populates using default or custom test data
 """

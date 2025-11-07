@@ -1,5 +1,5 @@
 """
-database models file
+MATTEO GUERRA's database models file
 Defines the class Student for table structure
 Declares base instance used in CRUD functions and database initialization
 """

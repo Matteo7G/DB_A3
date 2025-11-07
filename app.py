@@ -1,5 +1,5 @@
 """
-(Main) Application file
+MATTEO GUERRA's (Main) Application file
 Handles main testing logic for CRUD functions and UI
 """
 

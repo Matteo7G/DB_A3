@@ -1,4 +1,4 @@
-# COMP 3005 | Assignment 3
+# COMP 3005 | Assignment 3 | MATTEO GUERRA
 
 A Python application for performing specific CRUD (
 Create, Read, Update, Delete) operations on a PostgreSQL 
