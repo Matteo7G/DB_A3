@@ -1,24 +1,29 @@
-from models import Student
+"""
+CRUD function file
+handles all the CRUD operation functions for database
+"""
+
+from models_db import Student
 from init_db import Local_Session
 from sqlalchemy import select
-
-err_print = lambda msg: print(f"\033[31m{msg}\033[0m") #just prints errors in red
-out_print = lambda msg: print(f"\033[1;97m{msg}\033[0m") #just prints outputs in bright white
+from test_helpers import out_print, err_print
 
 
 # CRUD functions:
+# displays and returns all current entries in the student table
 def getAllStudents():
     query_get_all = select(Student).order_by(Student.student_id)
     with Local_Session() as session:
         students = session.scalars(query_get_all).all()
         if not students:
-            err_print("No students found.")
+            out_print("No students found.")
             return None
         out_print(f"Found {len(students)} students in database: ")
         for s in students:
             out_print(f" {s}")
         return students
 
+# adds a new entry to student table (if allowed)
 def addStudent(first_name, last_name, email, enrollment_date):
     with Local_Session() as session:
         query_email_exists = select(Student).where(Student.email == email)
@@ -31,7 +36,7 @@ def addStudent(first_name, last_name, email, enrollment_date):
         out_print(f"Successfully added new student {new_student}")
     return new_student
 
-
+# Updates the email of a student with specified student_id
 def updateStudentEmail(student_id, new_email):
     with Local_Session() as session:
         student = session.get(Student, student_id)
@@ -43,7 +48,7 @@ def updateStudentEmail(student_id, new_email):
         out_print(f"Successfully updated student with ID {student_id} with new email {new_email}")
     return student
 
-
+# Deletes the entry of a student with specified student_id
 def deleteStudent(student_id):
     with Local_Session() as session:
         student = session.get(Student, student_id)
