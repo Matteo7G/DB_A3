@@ -30,3 +30,6 @@ database using SQLAlchemy.
    - Through an IDE: should be able to directly execute app.py 
    - Through command line: enter `python app.py`
 
+## [Video Link](https://youtu.be/u6Z7KgE7ik8)
+
+
