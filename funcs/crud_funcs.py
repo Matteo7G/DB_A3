@@ -3,8 +3,8 @@ MATTEO GUERRA's CRUD function file
 handles all the CRUD operation functions for database
 """
 
-from models_db import Student
-from init_db import Local_Session
+from db.models_db import Student
+from db.init_db import Local_Session
 from sqlalchemy import select
 from test_helpers import out_print, err_print
 

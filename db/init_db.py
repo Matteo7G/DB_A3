@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from random import seed, choice, randrange
 from datetime import timedelta, date
 from models_db import Base, Student
-from test_helpers import err_print
+from funcs.test_helpers import err_print
 
 # Default student data from assignment specifications
 DEFAULT_DATA = [

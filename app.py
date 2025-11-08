@@ -3,9 +3,9 @@ MATTEO GUERRA's (Main) Application file
 Handles main testing logic for CRUD functions and UI
 """
 
-from init_db import reset_db, custom_test_data
-from crud_funcs import getAllStudents, addStudent, updateStudentEmail, deleteStudent
-from test_helpers import test_function
+from db.init_db import reset_db, custom_test_data
+from funcs.crud_funcs import getAllStudents, addStudent, updateStudentEmail, deleteStudent
+from funcs.test_helpers import test_function
 
 # main test function for testing all CRUD operation and handling UI
 def tester(use_default_data=True):
